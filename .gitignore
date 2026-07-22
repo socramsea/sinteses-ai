@@ -1,0 +1,14 @@
+.env
+.env.*
+__pycache__/
+*.pyc
+.work/
+out/
+work-backup/
+work-manual/
+lote1/
+lote3/
+video-final/
+assets/
+*.mp4
+*.mp3
