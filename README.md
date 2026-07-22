@@ -1,4 +1,4 @@
-# Síntese — Documentary Synthesis Engine (WSS+13)
+# Síntese — Documentary Synthesis Engine (forjaCriativa)
 
 Motor que transforma **eventos reais** em **documentários curtos** ("síntese do que
 aconteceu") para canal dark no YouTube / Shorts / Reels / TikTok. Pesquisa com fonte,
