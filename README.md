@@ -50,3 +50,7 @@ Roadmap curto
 [ ] trilha licenciada + color grade em assembly.py
 
 [ ] publicação automática (YouTube Data API) no estágio PUBLISHING
+
+---
+
+![Python](https://img.shields.io/badge/Python-3.12-blue) ![FastAPI](https://img.shields.io/badge/FastAPI-async-009688) ![Docker](https://img.shields.io/badge/Docker-compose-2496ED)
