@@ -30,6 +30,7 @@ Decisões de projeto que valem nota:
 - **Teto de custo aplicado no código.** `app/core/budget.py` projeta o custo do próximo estágio e aborta antes de chamar provider pago se estourar o teto.
 - **Compliance no código**, não em documento de política. Ver abaixo.
 - **Credencial não sai do servidor.** Nenhuma chave de geração chega ao cliente.
+- **Bilíngue por construção.** O `lang` decide o idioma do roteiro *e* a voz da narração, e entra no hash do job_id — o mesmo evento vira dois jobs independentes, cada um retomável por conta própria, em vez de um job com duas saídas.
 
 ## Arquitetura
 
@@ -65,21 +66,29 @@ storage — a lista completa está em `.env.example`. Requer Docker e Docker Com
 ```bash
 cp .env.example .env      # preencha as credenciais (server-side)
 make up                   # api + worker + redis via docker compose
-make enqueue              # enfileira o job de referência
+make enqueue              # job de referência, narração em português
+make enqueue-en           # mesmo evento, narração em inglês
 ```
 
 ## Testes
 
-A suite não precisa de credencial nem de Redis: o state machine é testado contra um
-duplo em memória.
+Sem credencial, sem Redis, sem gerar um frame: o Redis é um duplo em memória e todo
+estágio pago é falseado, então um clone limpo verifica a lógica do motor.
 
 ```bash
 pip install -r requirements-dev.txt
-make test
+make test                 # 47 testes, ~1s
 ```
 
-Cobre a máquina de estados (persistência, idempotência de fila, tolerância a schema
-antigo), a derivação do id do job e os bloqueios de compliance.
+Plano de cenas, compliance e budget rodam de verdade; só o provider de vídeo, o TTS,
+a montagem e o export são falseados. É isso que torna a retomada verificável em vez
+de retórica — a suite prova que um job reiniciado com 1 de 3 clipes prontos chama o
+provider exatamente duas vezes, e que uma falha de compliance ou de orçamento aborta
+antes de qualquer chamada paga.
+
+Cobre o orquestrador (os dois modos, retomada, guard-rails, roteamento de idioma,
+asset geográfico), a máquina de estados, a derivação do id do job, a resolução de voz
+e os bloqueios de compliance.
 
 ## Compliance
 

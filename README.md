@@ -27,6 +27,7 @@ Design decisions worth noting:
 - **Cost ceiling enforced in code.** `app/core/budget.py` projects the cost of the next stage and aborts *before* calling a paid provider if it would exceed `JOB_BUDGET_BRL_MAX`; scene count is capped separately to stop runaway jobs. Per-unit figures are estimates until calibrated against provider invoices.
 - **Compliance enforced in code**, not in policy documents. See below.
 - **Credentials stay server-side.** No generation keys reach the client.
+- **Bilingual by construction.** `lang` drives both the script language and the TTS voice, and it is part of the job-ID hash — so the same event runs as two independent, separately resumable jobs rather than one job with two outputs.
 
 ## Architecture
 
@@ -59,18 +60,21 @@ This is a live system, not a self-contained demo. A full run needs paid credenti
 
     cp .env.example .env      # fill in credentials (server-side only)
     make up                   # api + worker + redis via docker compose
-    make enqueue              # enqueue the reference job
+    make enqueue              # reference job, Portuguese narration
+    make enqueue-en           # same event, English narration
 
 Without generation credentials the API, worker, state machine and compliance stage still run.
 
 ## Tests
 
-The suite needs no credentials and no Redis — the state machine is exercised against an in-memory double, so a clean clone can verify it:
+No credentials, no Redis, no generated frames — Redis is an in-memory double and every paid stage is stubbed, so a clean clone can verify the engine's logic:
 
     pip install -r requirements-dev.txt
-    make test                 # 14 tests, ~1s
+    make test                 # 47 tests, ~1s
 
-Covering the state machine (persistence, queue idempotency, tolerance of older job schemas), job-id derivation, and the compliance blocks.
+Scene planning, compliance and budget run for real; only the video provider, TTS, assembly and export are faked. That is what makes the resumability claim checkable rather than rhetorical — the suite asserts that a job restarted with one of three clips already generated calls the provider exactly twice, and that a compliance or budget failure aborts before any paid call is made.
+
+Covering the orchestrator (both modes, resume, guard-rails, language routing, geographic assets), the state machine, job-id derivation, voice resolution, and the compliance blocks.
 
 ## Compliance
 

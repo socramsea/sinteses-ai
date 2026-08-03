@@ -1,4 +1,4 @@
-.PHONY: up down logs api worker test fmt enqueue
+.PHONY: up down logs api worker test fmt enqueue enqueue-en enqueue-both
 
 up:        ## sobe stack (api + worker + redis)
 	docker compose up -d --build
@@ -18,5 +18,12 @@ worker:    ## roda o worker local (sem docker)
 test:
 	pytest -q
 
-enqueue:   ## enfileira o piloto (terremoto Venezuela)
-	python scripts/enqueue_example.py
+# -m e não caminho de arquivo: sem PYTHONPATH, `python scripts/x.py` não enxerga app/
+enqueue:   ## enfileira o piloto (terremoto Venezuela) em pt-BR
+	python -m scripts.enqueue_example
+
+enqueue-en: ## enfileira o piloto em inglês
+	python -m scripts.enqueue_example --lang en
+
+enqueue-both: ## enfileira o piloto nos dois idiomas
+	python -m scripts.enqueue_example --both

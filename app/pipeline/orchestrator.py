@@ -85,7 +85,7 @@ def run(job: Job) -> None:
     if not job.artifacts.get("vo"):
         set_stage(job, Stage.NARRATING)
         vo_text = " ".join(sc["narration"] for sc in scene_list if sc["narration"])
-        vo_path = narration.narrate(vo_text, f"{WORK}/{job.job_id}/vo.mp3")
+        vo_path = narration.narrate(vo_text, f"{WORK}/{job.job_id}/vo.mp3", lang=job.lang)
         job.artifacts["vo"] = vo_path
         save(job)
     else:
@@ -166,7 +166,8 @@ def _run_creative(job: Job) -> None:
         vo_path = ""
         if vo_text.strip():
             try:
-                vo_path = narration.narrate(vo_text, f"{WORK}/{job.job_id}/vo.mp3")
+                vo_path = narration.narrate(vo_text, f"{WORK}/{job.job_id}/vo.mp3",
+                                            lang=job.lang)
             except Exception as e:  # noqa: BLE001 — narração indisponível não derruba o promo
                 log.warning("job %s: narração indisponível (%s) — seguindo SEM áudio",
                             job.job_id, type(e).__name__)
