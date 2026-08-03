@@ -21,3 +21,6 @@ __pycache__/
 .env
 .bak-*/
 *.egg-info/
+*.swp
+*.swo
+*~
