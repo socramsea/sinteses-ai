@@ -10,9 +10,7 @@ Built and operated by a single engineer. Deployed on DigitalOcean and producing 
 
 **Stack:** Python 3.12 · FastAPI · Redis · FFmpeg · MoviePy · Docker · DigitalOcean
 
-## Demo
-
-_(video link)_ — a nine-scene film produced end to end by this pipeline.
+Portuguese version: [README.pt-BR.md](README.pt-BR.md).
 
 ## What it does
 
@@ -26,7 +24,7 @@ Design decisions worth noting:
 
 - **Asynchronous by default.** Generation calls take minutes. `POST /jobs` returns `202` immediately with a job ID; progress is retrieved by polling.
 - **Idempotent submission.** The job ID is a hash of the request payload, so replaying the same request returns the existing job instead of enqueueing duplicate work.
-- **Budget-aware.** `app/core/budget.py` tracks per-job generation cost, so a run cannot silently overspend on API calls.
+- **Cost ceiling enforced in code.** `app/core/budget.py` projects the cost of the next stage and aborts *before* calling a paid provider if it would exceed `JOB_BUDGET_BRL_MAX`; scene count is capped separately to stop runaway jobs. Per-unit figures are estimates until calibrated against provider invoices.
 - **Compliance enforced in code**, not in policy documents. See below.
 - **Credentials stay server-side.** No generation keys reach the client.
 
@@ -40,9 +38,9 @@ Design decisions worth noting:
       pipeline/          the eight pipeline stages
       workers/           queue consumer running the orchestrator
       storage/           object storage upload (DigitalOcean Spaces)
-    prompts/             research_system.md (cached), scene_director.md
-    scripts/             enqueue_example.py
-    tests/               state machine and compliance coverage
+    prompts/             research_system.md (cached), scene_director.md, vo_brandfilm.txt
+    scripts/             enqueue_example.py (reference job) + production utilities
+    tests/               state machine, job-id derivation, compliance
     docs/                ARCHITECTURE.md, COMPLIANCE.md
 
 API and worker run as separate containers sharing a Redis instance. Scaling render throughput means adding workers, not touching the API.
@@ -63,7 +61,16 @@ This is a live system, not a self-contained demo. A full run needs paid credenti
     make up                   # api + worker + redis via docker compose
     make enqueue              # enqueue the reference job
 
-Without generation credentials the API, worker, state machine and compliance stage still run, and the test suite covers both.
+Without generation credentials the API, worker, state machine and compliance stage still run.
+
+## Tests
+
+The suite needs no credentials and no Redis — the state machine is exercised against an in-memory double, so a clean clone can verify it:
+
+    pip install -r requirements-dev.txt
+    make test                 # 14 tests, ~1s
+
+Covering the state machine (persistence, queue idempotency, tolerance of older job schemas), job-id derivation, and the compliance blocks.
 
 ## Compliance
 
@@ -77,8 +84,8 @@ Sensitive subject matter is routed to human review before publication. Details i
 
 ## Roadmap
 
-- [ ] Geographic frames for the reference job under `assets/geo/<slug>/`
-- [ ] Calibrate real generation cost in `core/budget.py`
+- [ ] Geographic frames for the reference job under `assets/geo/<slug>/` (media data, kept out of the repo)
+- [ ] Calibrate real per-unit generation cost in `core/budget.py` against provider invoices
 - [ ] Licensed score and colour grade in `assembly.py`
 - [ ] Automated publishing at the `PUBLISHING` stage
 

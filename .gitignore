@@ -24,3 +24,6 @@ __pycache__/
 *.swp
 *.swo
 *~
+
+# .env.example e documentacao: precisa estar no repo (quickstart depende dele)
+!.env.example

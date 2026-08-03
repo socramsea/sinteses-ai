@@ -1,0 +1,4 @@
+-r requirements.txt
+
+# suite de testes: roda sem infra (Redis é substituído por duplo em memória)
+pytest==8.3.4
