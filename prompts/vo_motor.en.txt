@@ -1,0 +1,13 @@
+# Engine film — English · ~78s · format: id|voice|text  (voice: NARRADORA or CETICA)
+# The 0:00–0:12 opening is SILENT. First line lands at 0:12.
+# NOTE: the MiniMax ids in generate_vo_lote.py are pt-BR designed voices. For this
+# script either pick an English voice in the fal dashboard, or run it through the
+# engine's own edge-tts path (narration.narrate(..., lang="en")).
+s01|NARRADORA|Twelve seconds. <#0.8#> None of these frames were filmed.
+s02|NARRADORA|Every shot came out of a video generation API, orchestrated by an engine I built and run on my own. <#1.0#> It's called Síntese.
+s03|NARRADORA|You give it a real event. <#0.6#> It researches with sources, breaks it into scenes, generates the reconstructions, narrates, assembles and exports. <#0.8#> One job, asynchronous.
+s04|CETICA|And when the worker dies mid-generation?
+s05|NARRADORA|It resumes where it stopped. <#0.6#> State lives in Redis, and the job ID is a hash of the payload: <#0.6#> replaying the same request doesn't generate again, and doesn't charge again.
+s06|NARRADORA|Cost is a requirement, not a detail. <#0.6#> The engine projects the next stage's spend and aborts before calling the provider if it would break the ceiling.
+s07|NARRADORA|And nothing renders without a cited source. <#0.8#> AI passing itself off as real footage is blocked in code, not in a policy document.
+s08|NARRADORA|Code, tests and the full documentary <#0.6#> are in the link below.
