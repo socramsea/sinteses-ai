@@ -1,0 +1,17 @@
+# formato: id|voz|texto  (voz: NARRADORA ou CETICA)
+s01|NARRADORA|Pausa. <#1.2#> Você percebeu o que acabou de acontecer?
+s02|NARRADORA|Cinquenta segundos. <#0.6#> Sem cortes rápidos. Sem texto piscando. <#0.8#> Sem ninguém gritando: não pula o anúncio. <#1.0#> E você ainda está aqui.
+s03|NARRADORA|Isso não foi sorte. <#0.8#> Foi método. <#0.6#> Deixa eu te mostrar.
+s04|NARRADORA|Isso é ritmo. <#0.8#> Quietude... <#1.0#> e impacto. <#0.8#> O cérebro humano não resiste a esse contraste. Ele precisa saber o que vem depois. <#0.6#> É a primeira coisa que a sua marca precisa dominar.
+s05|NARRADORA|Isso é paleta. <#0.8#> Repara: dourado, azul profundo, pedra escura. <#0.6#> Do primeiro ao último segundo, as mesmas cores. <#0.6#> Seu olho relaxa. E confia. <#0.8#> Consistência visual é o que separa uma marca de um amontoado de posts.
+s06|NARRADORA|E isso... <#1.0#> é raridade. <#0.8#> Uma praia que quase ninguém alcança. Um animal que quase ninguém vê. <#0.8#> O que é raro e difícil de encontrar, vale mais. <#0.6#> Igual esse lugar. <#0.8#> Igual a sua marca, quando ela é posicionada do jeito certo.
+s07|NARRADORA|Num mundo onde ninguém segura três segundos de atenção... <#0.8#> você está comigo há dois minutos. <#1.0#> Eu não te pedi atenção. Eu construí ela. <#0.6#> Plano a plano.
+s08|NARRADORA|É exatamente isso que eu faço pela sua marca: <#0.6#> um filme documentário sobre a sua história. Com esse padrão, essa intenção, esse método.
+s09|NARRADORA|E toda jornada bem contada... <#1.0#> leva a um encontro.
+s10|CETICA|Tá. <#0.5#> Bonito. <#0.6#> Mas isso funciona pro meu mercado? Eu não vendo baleia.
+s11|NARRADORA|A baleia é o método, não o produto. <#0.6#> O filme é sobre a sua história. Sua virada, seu mar, suas pedras. <#0.6#> O que muda é o cenário. O que não muda é a atenção que ele prende.
+s12|CETICA|E quanto tempo isso leva? <#0.5#> A produtora me pediu quarenta e cinco dias.
+s13|NARRADORA|Sete dias. <#0.8#> Da primeira conversa à entrega.
+s14|CETICA|Sete dias?! <#0.6#> E o investimento?
+s15|NARRADORA|Uma fração do que uma produtora cobra por esse padrão. <#0.6#> O número exato depende do seu projeto. E é por isso que o próximo passo é uma conversa, não um boleto.
+s16|NARRADORA|Eu prendi a sua atenção por três minutos. <#1.0#> Imagina o que eu faço com a atenção dos seus clientes. <#1.0#> Agende sua sessão de avaliação. <#0.6#> O link está aqui embaixo.

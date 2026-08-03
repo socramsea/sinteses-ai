@@ -1,0 +1,12 @@
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.4
+pydantic-settings==2.7.1
+redis==5.2.1
+httpx==0.28.1
+anthropic==0.42.0
+edge-tts==7.0.0
+moviepy>=2.1.2
+boto3==1.35.92
+tenacity==9.0.0
+python-multipart==0.0.20

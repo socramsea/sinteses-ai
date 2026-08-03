@@ -1,0 +1,9 @@
+[project]
+name = "sintese"
+version = "0.1.0"
+description = "Síntese — motor de documentários sintéticos (canal dark) para WSS+13"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
