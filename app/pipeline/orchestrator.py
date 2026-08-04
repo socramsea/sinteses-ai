@@ -138,6 +138,15 @@ def _run_creative(job: Job) -> None:
     if not scene_list:
         raise ValueError("mode='creative' exige job.scenes (nenhuma cena recebida)")
 
+    # mesma trava de runaway do modo documentário (aplicada lá por scenes.plan):
+    # aqui as cenas vinham direto do payload e JOB_MAX_SCENES era ignorado.
+    # O corte é avisado — truncar em silêncio vira "gerou tudo" pra quem operou.
+    permitido = budget.guard_scene_count(len(scene_list))
+    if permitido < len(scene_list):
+        log.warning("job %s: %d cenas recebidas, cortando para %d (JOB_MAX_SCENES)",
+                    job.job_id, len(scene_list), permitido)
+        scene_list = scene_list[:permitido]
+
     # orçamento (cobra uma vez; respeita retomada)
     expected = len(scene_list) * budget.COST_PER_CLIP_BRL
     if job.cost_brl < expected:

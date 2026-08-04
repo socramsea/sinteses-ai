@@ -366,6 +366,58 @@ def test_criativo_segue_sem_audio_se_a_narracao_cair(spy):
     assert job.artifacts["master"]
 
 
+def test_criativo_respeita_o_cap_de_cenas(spy, monkeypatch):
+    """A trava de runaway vale nos dois modos — no criativo ela não existia."""
+    monkeypatch.setattr(budget.settings, "job_max_scenes", 3)
+    job = new_job(mode="creative",
+                  scenes=[{"visual_prompt": f"plano {i}"} for i in range(10)])
+
+    orchestrator.run(job)
+
+    assert len(spy.generated) == 3
+    assert len(job.artifacts["clips"]) == 3
+
+
+def test_criativo_cobra_so_as_cenas_que_vai_gerar(spy, monkeypatch):
+    """Cortar cena tem que cortar custo junto, senão cobra pelo que não gerou."""
+    monkeypatch.setattr(budget.settings, "job_max_scenes", 3)
+    job = new_job(mode="creative",
+                  scenes=[{"visual_prompt": f"plano {i}"} for i in range(10)])
+
+    orchestrator.run(job)
+
+    assert job.cost_brl == pytest.approx(3 * budget.COST_PER_CLIP_BRL)
+
+
+def test_criativo_avisa_ao_cortar_cenas(spy, monkeypatch, caplog):
+    """Corte silencioso vira 'gerou tudo' na cabeça de quem operou."""
+    import logging
+
+    monkeypatch.setattr(budget.settings, "job_max_scenes", 2)
+    job = new_job(mode="creative",
+                  scenes=[{"visual_prompt": f"plano {i}"} for i in range(5)])
+
+    with caplog.at_level(logging.WARNING):
+        orchestrator.run(job)
+
+    assert "cortando" in caplog.text
+    assert "JOB_MAX_SCENES" in caplog.text
+
+
+def test_criativo_dentro_do_cap_nao_avisa(spy, monkeypatch, caplog):
+    import logging
+
+    monkeypatch.setattr(budget.settings, "job_max_scenes", 12)
+    job = new_job(mode="creative",
+                  scenes=[{"visual_prompt": f"plano {i}"} for i in range(4)])
+
+    with caplog.at_level(logging.WARNING):
+        orchestrator.run(job)
+
+    assert "cortando" not in caplog.text
+    assert len(spy.generated) == 4
+
+
 def test_criativo_repassa_overlays_para_a_montagem(spy):
     job = new_job(mode="creative",
                   scenes=[{"visual_prompt": "tela do app", "overlay": "logo"}])
