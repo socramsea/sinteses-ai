@@ -1,56 +1,71 @@
-# Mapa de Montagem — Filme do Motor (~90s)
+# Mapa de Montagem — Filme do Motor (93,4s · 9:16 nativo)
 
-Peça de portfólio: apresenta o Síntese narrando sobre o próprio output. Todo clipe
-usado aqui **foi gerado por este pipeline** — o nome de arquivo é `md5(url)[:12].mp4`,
-o padrão de cache do `video_provider.py:85`. A imagem é a evidência, não ilustração.
+Peça de portfólio: apresenta o Síntese narrando sobre imagem de geração própria.
 
-Master 16:9 · 24fps · 9:16 derivado depois do master aprovado.
-VO: `prompts/vo_motor.txt` (pt-BR) e `prompts/vo_motor.en.txt` (inglês).
+**Master 9:16 (1080x1920), 24fps.** O material-fonte é vertical — os 16 clipes
+saíram em 1080x1920. Não há master 16:9: de uma fonte com 1080 de largura não se
+tira 1920 sem escalar 1,78x e cortar altura, e nos planos fechados (olhos, mãos)
+isso inviabiliza o enquadramento. Vertical íntegro vale mais que horizontal
+remendado.
 
-## Material — tudo já em disco, nada a gerar
+> ⚠️ Não usar `export.py` para gerar 16:9 a partir deste master: a linha 26 faz
+> `resized((1920,1080))` sem preservar proporção e **achata** a imagem. O caminho
+> 16:9 assume master já horizontal.
 
-| Clipe | Origem | Conteúdo |
-|---|---|---|
-| `adc01eda1ab0` | `.work/brandfilm-ato1/` | aérea da costa |
-| `d8ee9bf5722f` | `.work/brandfilm-ato1/` | onda na pedra |
-| `8f93e747fd03` | `.work/brandfilm-ato1/` | macro água |
-| `61da9d4148b1` | `.work/brandfilm-ato1/` | a espera |
-| `08192357ff83` | `.work/brandfilm-ato1/` | aparição da jubarte |
-| `0836151bd147` | `.work/brandfilm-ato1/` | nadadeira |
-| 6 clipes da travessia | `work-backup/c5b824933ba095f5/clips/` | escolher 2 para 1:01–1:24 |
+## Material
 
-Todos 8s, 1280x720. Trilha: `out/trilhas/trilha-a-piano-cordas.wav` (61s).
+**Imagem** — `.work/motor-broll/`, 16 clipes, 78s no total, todos 1080x1920.
+Baixados por `scripts/baixar_clipes_fal.py`; `manifest.json` liga slug → arquivo.
+
+**Voz** — `out/motor-vo/s01..s08.mp3`, 81,43s. Roteiro: `prompts/vo_motor.txt`.
+NARRADORA `Voice6d64b7cc1784772153`, CETICA `Voice43759aae1784770778`.
+
+**Trilha** — `out/trilhas/trilha-motor.wav`, 94,0s, gerada sob medida no
+`stable-audio-25`. Os leitos antigos (`trilha-a`, `trilha-b`) têm 61s e não
+servem: loop de trilha em documentário se ouve na emenda.
 
 ## Decupagem
 
-Tempos de VO são **estimativa** (~11,5 char/s + pausas). Fechar depois de gerar —
-regra herdada: o ritmo do corte segue a voz, nunca o contrário.
-
 | Tempo | Voz | Imagem |
 |---|---|---|
-| 0:00–0:08 | — | `adc01eda1ab0`, trilha entrando mínima |
-| 0:08–0:12 | — | `d8ee9bf5722f` |
-| 0:12–0:17 | s01 | `d8ee9bf5722f` seguindo; **CONGELA** no impacto, em "filmado" |
-| 0:17–0:29 | s02 | descongela em slow 50%, corta para `8f93e747fd03` |
-| 0:29–0:43 | s03 | `61da9d4148b1`; vira para `08192357ff83` em "gera as reconstituições" |
-| 0:43–0:47 | s04 (CETICA) | **FREEZE** em `08192357ff83` + silêncio na trilha |
-| 0:47–1:01 | s05 | `0836151bd147` em slow 50% |
-| 1:01–1:13 | s06 | travessia — clipe 1 dos 6 |
-| 1:13–1:24 | s07 | travessia — clipe 2 |
-| 1:24–1:30 | s08 | tela limpa: mar + cartão `github.com/socramsea/sinteses-ai` |
+| 0:00–0:06 | — | `black-ponto-de-luz` — abre no preto, trilha entrando mínima |
+| 0:06–0:10 | — | `feixe-de-projetor` — a luz se acende |
+| 0:10–0:12 | — | `particulas-de-luz` (2s iniciais) |
+| 12,00–14,00 | **s01** | `particulas-de-luz` (2s finais) |
+| 14,00–17,65 | s01 | `estroboscopio-dourado` |
+| 17,65–22,65 | **s02** | `tela-apagando` |
+| 22,65–30,65 | s02 | `silhueta-monitores` — entra em "o motor que percorre esse caminho" |
+| 30,65–31,66 | s02 | **FREEZE** + zoom 3%, segura em "Síntese" |
+| 31,66–35,66 | **s03** | `maos-calejadas` |
+| 35,66–39,66 | s03 | `sala-de-reuniao-vazia` |
+| 39,66–46,49 | s03 | `escritorio-vazio` |
+| 46,49–49,33 | **s04** (CETICA) | **FREEZE** no último frame + zoom 3%; trilha recua |
+| 49,33–50,33 | **s05** | descongela em **slow 50%** |
+| 50,33–55,33 | s05 | `multidao-desfocada` |
+| 55,33–59,33 | s05 | `multidao-foco-revela` — o foco achando a figura = retomar |
+| 59,33–63,33 | s05 | `olhos-close` |
+| 63,33–64,63 | s05 | `olhos-close` em **slow 50%** |
+| 64,63–69,63 | **s06** | `cidade-a-noite` |
+| 69,63–73,63 | s06 | `palco-vazio` |
+| 73,63–76,33 | s06 | `palco-vazio` em **slow 50%** |
+| 76,33–81,33 | **s07** | `moldura-vazia` — moldura sem foto = afirmação sem fonte |
+| 81,33–86,33 | s07 | `drone-oceano` |
+| 86,33–86,77 | s07 | **FREEZE** |
+| 86,77–93,43 | **s08** | fade para preto + cartão `github.com/socramsea/sinteses-ai` |
 
-## Regras (herdadas do MONTAGEM.md)
+Os 16 clipes são usados, nenhum repetido. 78s de imagem + 9,3s de freeze/slow +
+6,2s de cartão = 93,4s. A trilha de 94,0s cobre com 0,6s de cauda.
 
-- Crossfade 3–4s; nunca corte seco na abertura silenciosa
+## Regras
+
+- Crossfade 3–4s dentro dos blocos; nunca corte seco na abertura silenciosa
 - Freeze sempre no ápice do movimento + zoom lento 3–5%
 - Descongelar em slow 50% por 1s
-- 9:16 só depois do master 16:9 aprovado
+- Trilha recua sob a fala da CETICA (s04) e volta no descongelamento
+- Nada no médio da trilha que dispute com a narração
 
 ## Pendências
 
-- [ ] Gerar o VO (~825 caracteres pt-BR ≈ US$0,08; inglês ≈ US$0,09 no MiniMax)
-- [ ] Escolher 2 dos 6 clipes da travessia para s06/s07
-- [ ] **Trilha cobre 61s, o filme tem ~90s** — estender o leito, encadear as duas
-      trilhas, ou cortar o roteiro. Decidir depois de ouvir o VO real
-- [ ] Voz inglesa: os ids MiniMax são pt-BR. Ou escolher voz inglesa no painel da
-      fal, ou usar o `edge-tts` do motor (`lang="en"`, gratuito)
+- [ ] Montar
+- [ ] Legenda queimada em pt-BR (9:16 é assistido sem som na maior parte)
+- [ ] Disclosure de IA no rodapé — o próprio filme exige isso na s07
