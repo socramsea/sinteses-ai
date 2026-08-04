@@ -2,7 +2,7 @@
 # Abertura 0:00–0:12 é SILENCIOSA. A primeira fala entra em 0:12.
 # Regra herdada do MONTAGEM.md: montar DEPOIS do VO gerado, nunca antes.
 s01|NARRADORA|Doze segundos. <#0.8#> Nenhum desses frames foi filmado.
-s02|NARRADORA|Todos saíram de uma API de geração de vídeo, orquestrados por um motor que eu construí e opero sozinho. <#1.0#> Ele se chama Síntese.
+s02|NARRADORA|Todos saíram de um modelo de geração de vídeo. <#1.0#> E o motor que percorre esse caminho inteiro, sozinho, eu construí e opero. <#0.8#> Ele se chama Síntese.
 s03|NARRADORA|Você dá um evento real. <#0.6#> Ele pesquisa com fonte, quebra em cenas, gera as reconstituições, narra, monta e exporta. <#0.8#> Um job, assíncrono.
 s04|CETICA|E quando o worker cai no meio da geração?
 s05|NARRADORA|Retoma de onde parou. <#0.6#> O estado vive no Redis, e o id do job é hash do payload: <#0.6#> reenviar o mesmo pedido não gera de novo, nem cobra de novo.
